@@ -15,10 +15,3 @@ if __name__ == "__main__":
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         executor.map(thread_function, range(3))
 
-# The code creates a ThreadPoolExecutor as a context manager, telling it how many
-# worker threads it wants in the pool. It then uses .map() to step through an iterable
-# of things, in your case range(3), passing each one to a thread in the pool.
-
-# The end of the with block causes the ThreadPoolExecutor to do a .join() on each of
-# the threads in the pool. It is strongly recommended that you use ThreadPoolExecutor
-# as a context manager when you can so that you never forget to .join() the threads
