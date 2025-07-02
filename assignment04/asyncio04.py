@@ -11,7 +11,7 @@ async def dowload_image(name, delay):
 async def main():
     print(f"{time.ctime()} main coroutine started")
     delays = {2: 0, 1: 1, 0: 2}
-    started_tasks = [asyncio.create_task(dowload_image(i, delays[i])) for i in range(3)]
+    started_tasks = [asyncio.create_task(dowload_image(i, j)) for i,j in zip(range(3),reversed(range(3)))]
 
     await asyncio.sleep(0.1)
     for task in started_tasks:
