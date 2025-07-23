@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask_ import Flask, render_template, request
 
 # Create a Flask application instance
 app = Flask(__name__)
