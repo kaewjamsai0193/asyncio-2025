@@ -34,12 +34,16 @@ async def primes_up_to(n: int) -> List[int]:
 async def main():
     ns = [10, 20, 30]  # ตัวอย่างหลายค่า
     tasks = []
-    
+
     # TODO: สร้าง asyncio task สำหรับแต่ละ n
     # hint: ใช้ asyncio.create_task(...)
-    
+    for n in ns:
+        tasks.append(asyncio.create_task(primes_up_to(n)))
     # TODO: รอ task แต่ละตัวให้เสร็จและพิมพ์ผลลัพธ์
     # hint: ใช้ await
+    await asyncio.gather(*tasks)
+    for i in range(len(ns)):
+        print(f"Primes <= {ns[i]}:",await tasks[i])
     pass
 
 # เรียก main
