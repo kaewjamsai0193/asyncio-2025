@@ -7,13 +7,13 @@ async def fire_rocket(name: str, t0: float):
     start_time = time.perf_counter() - t0  # เวลาเริ่มสัมพัทธ์
     async with httpx.AsyncClient() as client:
         r = await client.get(url)
-        r.raise_for_status()
         data = r.json()
+        time_to_target = data.get("time_to_target")
         end_time = time.perf_counter() - t0
         return {
             "name": name,
             "start_time": start_time,
-            "time_to_target": data.get("time_to_target"),
+            "time_to_target": time_to_target,
             "end_time": end_time
         }
 
@@ -42,18 +42,21 @@ async def main():
         tasks.append(asyncio.create_task(fire_rocket(i, t0)))
 
     # TODO: รอให้ทุก task เสร็จและเก็บผลลัพธ์ตามลำดับ task
-    await asyncio.gather(*tasks)
-    results = []
-    for t in tasks:
-        results.append(t)
+    results = await asyncio.gather(*tasks)
 
     # TODO: แสดงผล start_time, time_to_target, end_time ของแต่ละ rocket ตามลำดับ task
+    print("Rockets fired:")
     for r in results:
-        print(r)
+        print(
+            f"Rocket-{r['name']} | "
+            f"start_time: {r['start_time']:.2f} sec | "
+            f"time_to_target: {r['time_to_target']:.2f} sec | "
+            f"end_time: {r['end_time']:.2f} sec"
+        )
     pass  # แสดงผล rocket
 
     # TODO: แสดงเวลารวมทั้งหมดตั้งแต่ยิงลูกแรกจนลูกสุดท้ายถึงจุดหมาย
-    t_total = 0  # คำนวณ max end_time
+    t_total = max(r["end_time"] for r in results)
     print(f"\nTotal time for all rockets: {t_total:.2f} sec")
 
 asyncio.run(main())
