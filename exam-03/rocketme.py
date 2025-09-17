@@ -50,7 +50,7 @@ async def main():
     # TODO: แสดงผล start_time, time_to_target, end_time ของแต่ละ rocket ตามลำดับ task
     for r in results:
         print(r)
-        pass  # แสดงผล rocket
+    pass  # แสดงผล rocket
 
     # TODO: แสดงเวลารวมทั้งหมดตั้งแต่ยิงลูกแรกจนลูกสุดท้ายถึงจุดหมาย
     t_total = 0  # คำนวณ max end_time
