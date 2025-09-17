@@ -38,12 +38,15 @@ async def worker(id: int):
 
 async def main():
     tasks = []
-    
+
     # TODO: สร้าง asyncio task สำหรับ worker 3 ตัว
     # hint: ใช้ asyncio.create_task(worker(id))
-    
+    for i in range(1,4):
+        tasks.append(asyncio.create_task(worker(i)))
+
     # TODO: รอให้ทุก task เสร็จ
     # hint: ใช้ await หรือ asyncio.gather
+    await asyncio.gather(*tasks)
     pass
 
 asyncio.run(main())
